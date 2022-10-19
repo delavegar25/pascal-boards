@@ -58,27 +58,6 @@ class PostUpdateViewTests(PostUpdateViewTestCase):
         self.client.login(password=self.password)
         self.response = self.client.get(self.url)
         
-    def test_status_code(self):
-        self.assertEquals(self.response.status_code, 200)
-        
-    def test_view_class(self):
-        view = resolve('/boards/1/topics/1/post/edit/')
-        self.assertEquals(view.func.view_class, PostUpdateView)
-        
-    def test_csrf(self):
-        self.assertContains(self.response, 'csrfmiddlewaretoken')
-        
-    def test_contains_form(self):
-        form = self.response.context.get('form')
-        self.assertIsInstance(form, ModelForm)
-    
-    def test_form_inputs(self):
-        '''
-        The view must contain two inputs: csrf, message textarea
-        '''
-        self.assertContains(self.response, '<input', 1)
-        self.assertContains(self.response, '<textarea', 1)
-        
 class SuccessfulPostUpdateViewTests(PostUpdateViewTestCase):
     def setUp(self):
         super().setUp()
